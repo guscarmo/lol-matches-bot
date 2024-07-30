@@ -1,8 +1,12 @@
 import json
 import logging
+import os
+from dotenv import load_dotenv
 from api_requests import get_summoner_id, get_recent_matches, get_match_details
 
-API_KEY = 'RGAPI-0b6a3ed8-5292-4b8d-a49a-c8c607320ee1'
+load_dotenv()
+
+API_KEY = os.getenv('API_KEY_RIOT')
 REGION = 'americas'
 SUMMONER_NAME = 'Gusbug'
 TAG = 'BR1'
