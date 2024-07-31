@@ -6,7 +6,6 @@ def get_summoner_id(api_key, summoner_name, tag, region):
     headers = {'X-Riot-Token': api_key}
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
-        print(response.json()['puuid'])
         return response.json()['puuid']
     else:
         print(f"Erro ao obter Summoner ID: {response.status_code}")
