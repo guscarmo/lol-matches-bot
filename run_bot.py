@@ -2,7 +2,7 @@ import time
 import subprocess
 import logging
 
-LOG_FILE = 'run_bot.log'
+LOG_FILE = 'log/run_bot.log'
 INTERVALO_VERIFICACAO = 180
 
 # Configuração de logging

@@ -10,7 +10,7 @@ API_KEY = os.getenv('API_KEY_RIOT')
 REGION = 'americas'
 SUMMONER_NAME = 'Gusbug'
 TAG = 'BR1'
-LOG_FILE = 'log.log'
+LOG_FILE = 'log/check_new_match.log'
 
 def last_match_id(data):
     try:

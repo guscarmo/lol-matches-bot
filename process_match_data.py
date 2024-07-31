@@ -3,7 +3,7 @@ import logging
 import subprocess
 
 # Configuração de logging
-LOG_FILE = 'process_match_data.log'
+LOG_FILE = 'log/process_match_data.log'
 logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', encoding='utf-8')
 
 # Lista de IDs (puuid) dos amigos
