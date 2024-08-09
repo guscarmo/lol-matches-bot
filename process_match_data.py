@@ -12,10 +12,18 @@ ids_amigos = [
     "3rrPAVHMa7h4T0Zr_vldEaSSF0KPj3-bgWKxip4gvQoXZA67Qrirgm_PblHJrMb0YUSaQvade8lJHQ",
     ]
 
+match_info_json = 'temp_match_info.json'
 nome_do_arquivo = 'data'
 
-# Carregar o JSON do arquivo
-def carregar_dados_partida(nome_do_arquivo):
+def check_new_match(match_info_json):
+    try:
+        match_info = load_json(match_info_json)
+        if match_info.get("status") == "Nova partida encontrada":
+            return True
+    except FileNotFoundError:
+        logging.error("Arquivo temp_match_info.json não encontrado")
+    
+def load_json(nome_do_arquivo):
     try:
         with open(nome_do_arquivo, 'r', encoding='utf-8') as arquivo:
             return json.load(arquivo)
@@ -39,7 +47,7 @@ def process_data(dados):
             puuid = amigo.get('puuid')
             nick = amigo.get('riotIdGameName')
             nome_campeao = amigo.get('championName', 'Desconhecido')
-            dano_fisico = amigo.get('physicalDamageDealt', 0)
+            dano_fisico = amigo.get('totalDamageDealtToChampions', 0)
 
             amigos_info.append((puuid, nick, nome_campeao, dano_fisico))
 
@@ -58,11 +66,15 @@ def process_data(dados):
             if puuid != puuid_melhor_amigo:
                 text += f"\nE o {nick} feedou de {nome_campeao}, só deu {dano_fisico} de dano"
         logging.info(text)
-        print(text)
+        # print(text)
+        with open('temp_match_result.txt', 'w', encoding='utf-8') as f:
+            f.write(text)
     else:
         print("Não há amigos suficientes na lista para comparação.")
 
 if __name__ == "__main__":
-    dados = carregar_dados_partida(nome_do_arquivo)
-    if dados:
-        process_data(dados)
+    new_match = check_new_match(match_info_json)
+    if new_match:
+        dados = load_json(nome_do_arquivo)
+        if dados:
+            process_data(dados)

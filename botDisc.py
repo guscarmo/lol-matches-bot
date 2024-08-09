@@ -3,7 +3,7 @@ import discord
 from discord.ext import commands
 import asyncio
 from dotenv import load_dotenv
-import sys
+import logging
 
 load_dotenv()
 id_channel = int(os.getenv('ID_CHANNEL'))
@@ -29,10 +29,15 @@ async def run(ctx, text:str):
 async def on_ready():
     channel = bot.get_channel(id_channel)
     if channel:
-        await channel.send(sys.argv[1])
+            try:
+                with open('temp_match_result.txt', 'r', encoding='utf-8') as f:
+                    message = f.read()
+                await channel.send(message)
+            except FileNotFoundError:
+                logging.error("Arquivo temp_match_result.txt não encontrado.")
     await bot.close()
     
 
-# Executa o bot
-bot.run(id_bot)
-
+if __name__ == "__main__":
+    logging.basicConfig(filename='log/botDisc.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', encoding='utf-8')
+    bot.run(id_bot)

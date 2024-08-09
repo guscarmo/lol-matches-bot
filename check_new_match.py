@@ -20,9 +20,9 @@ def last_match_id(data):
     except FileNotFoundError:
         return None
     
-def save_data(match_details):
-    with open('data', 'w', encoding='utf-8') as f:
-        json.dump(match_details, f, ensure_ascii=False, indent=4)   
+def save_data(data, file_name):
+    with open(file_name, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)   
 
 logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -40,13 +40,20 @@ def get_matches_data():
             if last_matchId != matchId:
                 match_details = get_match_details(API_KEY, matchId, REGION)
                 if match_details:
-                    save_data(match_details)
-                    # logging.info(f"Nova partida encontrada e salva com matchId: {matchId}")
-                    print(f"Nova partida encontrada com matchId: {matchId}")
+                    result = {"status": "Nova partida encontrada", "matchId": matchId}
+                    logging.info(result)
+                    # print(f"Nova partida encontrada com matchId: {matchId}")
+                    save_data(match_details, 'data')
+                    save_data(result, 'temp_match_info.json')
+                    print('')
                     return True
                 else:
                     logging.error("Falha ao obter detalhes da partida.")
                     print("Erro ao obter detalhes da partida.")
+            else:
+                result = {"status": "Não há nova partida", "matchId": matchId}
+                save_data(result, 'temp_match_info.json')
+                logging.error(result)
 
 if __name__ == "__main__":
     get_matches_data()
