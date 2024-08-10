@@ -50,7 +50,24 @@ def last_match_id():
     except pymongo.errors.PyMongoError as e:
         logging.error(f"Erro ao consultar o MongoDB: {e}")
         return None
+    
+def last_match_data():
+    collection = conectar_mongodb()
+    if collection is None:
+        logging.error("A conexão com o MongoDB falhou. O processo será encerrado.")
+        return None
+    
+    try:
+        last_match = collection.find_one(sort=[('_id', pymongo.DESCENDING)])
+        if last_match:
+            return last_match
+        else:
+            logging.warning("Nenhum documento encontrado no MongoDB.")
+            return None
+    except pymongo.errors.PyMongoError as e:
+        logging.error(f"Erro ao consultar o MongoDB: {e}")
+        return None
 
-# if __name__ == "__main__":
-#     upload_data_to_mongodb('data')
-    # print(last_match_id())
+if __name__ == "__main__":
+    # upload_data_to_mongodb('data')
+    print(last_match_data())

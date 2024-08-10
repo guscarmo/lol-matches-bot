@@ -1,6 +1,7 @@
 import json
 import logging
 import subprocess
+from functions_mongodb import last_match_data
 
 # Configuração de logging
 LOG_FILE = 'log/process_match_data.log'
@@ -75,6 +76,6 @@ def process_data(dados):
 if __name__ == "__main__":
     new_match = check_new_match(match_info_json)
     if new_match:
-        dados = load_json(nome_do_arquivo)
+        dados = last_match_data()
         if dados:
             process_data(dados)

@@ -11,7 +11,7 @@ logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format='%(asctime)s -
 
 def check_new_match(match_info_json):
     try:
-        match_info = load_json('temp_match_info.json')
+        match_info = load_json(match_info_json)
         if match_info.get("status") == "Nova partida encontrada":
             return True
     except FileNotFoundError:
