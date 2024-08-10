@@ -1,5 +1,11 @@
 .env
 __pycache__/
 build/
-data
 log/
+temp_match_info.json
+docker-compose.yml
+dockerfile
+iget_test.py
+ingest_test.py
+data
+temp_match_info.json
