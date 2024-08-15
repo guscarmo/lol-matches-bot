@@ -10,7 +10,10 @@ logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format='%(asctime)s -
 # Lista de IDs (puuid) dos amigos
 ids_amigos = [
     "RIsZRVaNEiQsiuXoMmJAELbH9FCCt-jdKUsnlaXXKKrEgfVcdBuTtPO8EFhXf-ZgASkWL10P-KwPcA",
-    "3rrPAVHMa7h4T0Zr_vldEaSSF0KPj3-bgWKxip4gvQoXZA67Qrirgm_PblHJrMb0YUSaQvade8lJHQ",
+    'peFe5m6AgFj9KiUc85xFt8UbJUmO1mzF460t-SvzB-o_PXJ9nzMIhMCK0MC8ctjw9ZJvUBeyDUv5Lw',
+    '3rrPAVHMa7h4T0Zr_vldEaSSF0KPj3-bgWKxip4gvQoXZA67Qrirgm_PblHJrMb0YUSaQvade8lJHQ',
+    'txDisQ4j_ck-k1QrtZzHGvwK7QFp3940h_PeuV4crR4u7-BDnm_AUwO2yJfMkv7nqyIFr1xCIdkp-g',
+    '0T8ntVGlPZeaDtidZ30PSG2uNiIBmmO58ycRkLjHwq3yJA_2URvZG5HqdYNj6UX3mFkRu-Zy6u2CuA'
     ]
 
 match_info_json = 'temp_match_info.json'
@@ -60,12 +63,12 @@ def process_data(dados):
         puuid_melhor_amigo = melhor_amigo.get('puuid')
         nick_melhor_amigo = melhor_amigo.get('riotIdGameName')
         nome_campeao_melhor_amigo = melhor_amigo.get('championName', 'Desconhecido')
-        text = f"Quem que causou mais dano físico ({maior_dano_fisico}) foi o jogador {nick_melhor_amigo}, de {nome_campeao_melhor_amigo}."
+        text = f"Maior dano: ({maior_dano_fisico}) {nick_melhor_amigo}, de {nome_campeao_melhor_amigo}."
 
         # Exibir informações dos demais amigos
         for puuid, nick, nome_campeao, dano_fisico in amigos_info:
             if puuid != puuid_melhor_amigo:
-                text += f"\nE o {nick} feedou de {nome_campeao}, só deu {dano_fisico} de dano"
+                text += f"\nFeeder: {nick} {nome_campeao}, {dano_fisico} de dano"
         logging.info(text)
         # print(text)
         with open('temp_match_result.txt', 'w', encoding='utf-8') as f:
