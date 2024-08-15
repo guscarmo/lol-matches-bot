@@ -10,7 +10,7 @@ logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format='%(asctime)s -
 # Lista de IDs (puuid) dos amigos
 ids_amigos = [
     "RIsZRVaNEiQsiuXoMmJAELbH9FCCt-jdKUsnlaXXKKrEgfVcdBuTtPO8EFhXf-ZgASkWL10P-KwPcA",
-    'peFe5m6AgFj9KiUc85xFt8UbJUmO1mzF460t-SvzB-o_PXJ9nzMIhMCK0MC8ctjw9ZJvUBeyDUv5Lw',
+    'RJsFuBvBZsXp-dfsuqP_3oqJ9mSQ6OkKRdABaWDuiK87v-xeadwZ_iiXXwm80Vvxg_pLetDYpHjxtg',
     '3rrPAVHMa7h4T0Zr_vldEaSSF0KPj3-bgWKxip4gvQoXZA67Qrirgm_PblHJrMb0YUSaQvade8lJHQ',
     'txDisQ4j_ck-k1QrtZzHGvwK7QFp3940h_PeuV4crR4u7-BDnm_AUwO2yJfMkv7nqyIFr1xCIdkp-g',
     '0T8ntVGlPZeaDtidZ30PSG2uNiIBmmO58ycRkLjHwq3yJA_2URvZG5HqdYNj6UX3mFkRu-Zy6u2CuA'
