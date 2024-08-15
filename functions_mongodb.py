@@ -67,6 +67,15 @@ def last_match_data():
     except pymongo.errors.PyMongoError as e:
         logging.error(f"Erro ao consultar o MongoDB: {e}")
         return None
+    
+def match_exists(matchId):
+    collection = conectar_mongodb()
+    if collection is None:
+        logging.error("A conexão com o MongoDB falhou. O processo será encerrado.")
+        return None
+    
+    match_exists = collection.find_one({"metadata.matchId": matchId})
+    return match_exists
 
 if __name__ == "__main__":
     # upload_data_to_mongodb('data')

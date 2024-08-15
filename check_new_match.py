@@ -2,7 +2,7 @@ import json
 import logging
 import os
 from dotenv import load_dotenv
-from functions_mongodb import last_match_id, upload_data_to_mongodb
+from functions_mongodb import last_match_id, upload_data_to_mongodb, match_exists
 from api_requests import get_summoner_id, get_recent_matches, get_match_details
 
 load_dotenv()
@@ -30,7 +30,10 @@ def get_matches_data():
         recent_matches = get_recent_matches(API_KEY, puuid, REGION)
         if recent_matches:
             matchId = recent_matches[0]
-            if last_matchId != matchId:
+
+            match_exist = match_exists(matchId)
+
+            if not match_exist:
                 match_details = get_match_details(API_KEY, matchId, REGION)
                 if match_details:
                     result = {"status": "Nova partida encontrada", "matchId": matchId}
