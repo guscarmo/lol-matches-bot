@@ -1,6 +1,5 @@
 import json
 import logging
-import subprocess
 from functions_mongodb import last_match_data
 
 # Configuração de logging
@@ -70,7 +69,6 @@ def process_data(dados):
             if puuid != puuid_melhor_amigo:
                 text += f"\nFeeder: {nick} {nome_campeao}, {dano_fisico} de dano"
         logging.info(text)
-        # print(text)
         with open('temp_match_result.txt', 'w', encoding='utf-8') as f:
             f.write(text)
     else:

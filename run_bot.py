@@ -4,7 +4,7 @@ import logging
 from process_match_data import load_json 
 
 LOG_FILE = 'log/run_bot.log'
-INTERVALO_VERIFICACAO = 180
+INTERVALO_VERIFICACAO = 50
 
 # Configuração de logging
 logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', encoding='utf-8')
@@ -34,8 +34,6 @@ def executar_verificacao():
                     logging.info(f"Resultado do envio: {resultado_envio}")
                 else:
                     logging.warning("A saída de 'process_match_data.py' está vazia. Nenhuma mensagem será enviada.")
-
-        # subprocess.run(['python', 'botDisc.py', resultado_processamento.stdout])
 
 if __name__ == "__main__":
 
