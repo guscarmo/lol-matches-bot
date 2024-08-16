@@ -4,6 +4,7 @@ from discord.ext import commands
 import asyncio
 from dotenv import load_dotenv
 import logging
+from functions_mongodb import summoner_highest_damage
 
 load_dotenv()
 id_channel = int(os.getenv('ID_CHANNEL'))
@@ -24,19 +25,13 @@ async def run(ctx, text:str):
     process = await asyncio.create_subprocess_exec(*cmd)
     await process.communicate()
 
-# Envia texto
-@bot.event
-async def on_ready():
+# Envia query Top Damage no chat
+@bot.command()
+async def topdamage(ctx):
     channel = bot.get_channel(id_channel)
-    if channel:
-            try:
-                with open('temp_match_result.txt', 'r', encoding='utf-8') as f:
-                    message = f.read()
-                await channel.send(message)
-            except FileNotFoundError:
-                logging.error("Arquivo temp_match_result.txt não encontrado.")
-    await bot.close()
-    
+    text = summoner_highest_damage()
+    if text:
+        await channel.send(text)
 
 if __name__ == "__main__":
     logging.basicConfig(filename='log/botDisc.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', encoding='utf-8')

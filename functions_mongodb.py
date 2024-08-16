@@ -77,6 +77,62 @@ def match_exists(matchId):
     match_exists = collection.find_one({"metadata.matchId": matchId})
     return match_exists
 
+
+def summoner_highest_damage():
+    collection = conectar_mongodb()
+    if collection is None:
+        logging.error("A conexão com o MongoDB falhou. O processo será encerrado.")
+        return None
+    
+    summoner_puuids = [
+    "RIsZRVaNEiQsiuXoMmJAELbH9FCCt-jdKUsnlaXXKKrEgfVcdBuTtPO8EFhXf-ZgASkWL10P-KwPcA",
+    'RJsFuBvBZsXp-dfsuqP_3oqJ9mSQ6OkKRdABaWDuiK87v-xeadwZ_iiXXwm80Vvxg_pLetDYpHjxtg',
+    '3rrPAVHMa7h4T0Zr_vldEaSSF0KPj3-bgWKxip4gvQoXZA67Qrirgm_PblHJrMb0YUSaQvade8lJHQ',
+    'txDisQ4j_ck-k1QrtZzHGvwK7QFp3940h_PeuV4crR4u7-BDnm_AUwO2yJfMkv7nqyIFr1xCIdkp-g',
+    '0T8ntVGlPZeaDtidZ30PSG2uNiIBmmO58ycRkLjHwq3yJA_2URvZG5HqdYNj6UX3mFkRu-Zy6u2CuA'
+    ]
+
+    pipeline = [
+        {"$unwind": "$info.participants"},
+
+        {
+            "$match": {
+                "info.participants.puuid": { "$in": summoner_puuids }
+            }
+        },
+
+        { 
+            "$group": {
+                "_id": "$metadata.matchId",
+                "maxDamageParticipant": { 
+                    "$first": {
+                        "damageDealt": { "$max": "$info.participants.totalDamageDealt" },
+                        "puuid": "$info.participants.puuid",
+                        "summonerName": "$info.participants.summonerName"
+                    }
+                }
+            }
+        },
+
+        {
+            "$group": {
+                "_id": "$maxDamageParticipant.summonerName",
+                "count": { "$sum": 1 }
+            }
+        },
+
+        {
+            "$sort": { "count": -1 }
+        }
+    ]
+
+    result = collection.aggregate(pipeline)
+
+    text = 'Top damage:'
+    for doc in result:
+        text += f"\n{doc['_id']} {doc['count']}"
+    return text
+
 if __name__ == "__main__":
     # upload_data_to_mongodb('data')
-    print(last_match_data())
+    print(summoner_highest_damage())

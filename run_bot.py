@@ -28,7 +28,7 @@ def executar_verificacao():
                 mensagem = f.read().strip()
                 if mensagem:
                     logging.info(f"Mensagem a ser enviada: {mensagem}")
-                    comando = ['python', 'botDisc.py']
+                    comando = ['python', 'bot_send_message.py']
                     logging.info(f"Executando comando: {comando}")
                     resultado_envio = subprocess.run(comando, shell=True)
                     logging.info(f"Resultado do envio: {resultado_envio}")
@@ -38,6 +38,9 @@ def executar_verificacao():
         # subprocess.run(['python', 'botDisc.py', resultado_processamento.stdout])
 
 if __name__ == "__main__":
+
+    bot_process = subprocess.Popen(['python', 'botDisc.py'])
+
     while True:
         try:
             executar_verificacao()
